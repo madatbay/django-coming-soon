@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '7)zt$@$zrxa412ghfnwn$s1v=d7jr)(f(gm7+=92#!^s0m+l$t'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['madatbay-django-landing.herokuapp.com', '127.0.0.1']
 
