@@ -1,0 +1,194 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Datalent.az - Professional Data Scientist Ol!</title>
+
+     <!-- Bootstrap Styles-->
+    <link href="{% static 'landing/assets/lib/bootstrap.css' %}" rel="stylesheet" />
+    <link href="{% static 'landing/assets/lib/bootstrap-grid.css' %}" rel="stylesheet" />
+    <link href="{% static 'landing/assets/lib/bootstrap-reboot.css' %}" rel="stylesheet" />
+    <!-- FontAwesome Styles-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;500;700&family=Source+Sans+Pro&display=swap" rel="stylesheet">
+    <!-- Custom Styles-->
+    <!-- <link rel="stylesheet" href="assets/css/reset.css"> -->
+    <link rel="stylesheet" href="{% static 'landing/assets/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'landing/assets/css/styles.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+    <div class="modal fade" id="notifyModal" tabindex="-1" role="dialog" aria-labelledby="notifyModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span class="close-span" aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                {% for conf in config %}
+              <div class="modal-body-heading">
+                  <h3>{{conf.modal_title|safe}}</h3>
+              </div>
+
+              <div class="modal-body-text">
+                  <p class="heading-parag pt-4 pb-3">{{conf.modal_describtion|safe}}</p>
+              </div>
+              {% endfor %}
+            </div>
+            <div class="modal-footer">
+               <form action="" method="POST" >
+                   {% csrf_token %}
+                   <div class="inputs">
+                       <input class="emailInput" type="email" name="email" placeholder="Email hesabınızı daxil edin...">
+                       <span>
+                           <button type="submit " class="arrowButton" id="submit">
+                            <i class="icon-arrow-right">&rarr;</i>
+                           </button>
+                       </span>
+                   </div>
+               </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+
+    <div id="particles-js"></div>
+        <div class="container-fluid">
+            <div class="row">
+                {% if messages%}
+                <div class="message mt-2 mb-0 text-center    {{ code }}">
+                    {{messages}}
+                </div>
+                {% endif %}
+                <div class="main col-md-12 ">
+                    {% for conf in config %}
+                    <div class="logo">
+                        <a href="{% url 'index' %}">
+                        <img class="logo-img pb-4 mb-5" src="{{conf.logo.url}}" alt="Logo">
+                        </a>
+                    </div>
+                    <!--CountDown-->
+                    <div class="count-down " data-end-date="Nov 1, 2020 00:00:00">
+                        <div class="count-down-first">
+                            <h1 id="count-down-days"></h1>
+                            <p class="count-down-text">Gün</p>
+                        </div>
+                        <div class="count-down-second">
+                            <h1 id="count-down-hours"></h1>
+                            <p class="count-down-text">Saat</p>
+                        </div>
+                        <div class="count-down-third">
+                            <h1 id="count-down-minutes"></h1>
+                            <p class="count-down-text">Dəqiqə</p>
+                        </div>
+                        <div class="count-down-fourth">
+                            <h1 id="count-down-seconds"></h1>
+                            <p class="count-down-text">Saniyə</p>
+                        </div>
+                    </div>
+                    <!--End of countdown-->
+
+
+                    <div class="heading">
+                        
+                            <h2 class="heading-text">{{conf.title|safe}}</h2>
+                            <p class="heading-parag pt-4 pb-3">{{conf.describtion|safe}}</p>
+                        
+
+
+                    </div>
+
+                    <div class="arrow">
+                        <i class="icon-arrow">&darr;</i>
+                    </div>
+
+                    <div class="btns pt-5">
+                        <button type="button" class=" btn-notify" data-toggle="modal" data-target="#notifyModal">{{conf.button_text}}</button>
+                    </div>
+
+                    <div class="footer">
+                        <ul class="footer-icons">
+                            <li class="facebook"><a href="{{conf.facebook}}"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+                            <li class="instagram"><a href="{{conf.instagram}}"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                            <li class="mail"><a href="{{conf.email}}"><i class="fa fa-envelope"  aria-hidden="true"></i></a></li>
+                            <li class="telegram"><a href="{{conf.telegram}}"><i class="fa fa-telegram " aria-hidden="true"></i></a></li>
+                          </ul>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+
+    <script src="{% static 'landing/particles.js' %}"></script>
+    <script src="{% static 'landing/assets/js/app.js' %}"></script>
+    
+    <!-- stats.js -->
+    <script src="assets/js/lib/stats.js"></script>
+
+
+    <script>
+        var countDownDate = new Date('{{config.0.timer}}').getTime();
+
+        var x = setInterval(function() {
+
+        var now = new Date().getTime();
+            
+        // Find the distance between now and the count down date
+        var distance = countDownDate - now;
+            
+        // Time calculations for days, hours, minutes and seconds
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        // Output the result in an element with id="demo"
+        if (days < 10){
+            document.getElementById("count-down-days").innerHTML = '0' + days;
+        }
+        else{
+            document.getElementById("count-down-days").innerHTML = days;
+        }
+        if (hours < 10){
+            document.getElementById("count-down-hours").innerHTML = '0' + hours;
+        }
+        else{
+            document.getElementById("count-down-hours").innerHTML = hours;
+        }
+        if (minutes < 10){
+            document.getElementById("count-down-minutes").innerHTML = '0' + minutes;
+        }
+        else{
+            document.getElementById("count-down-minutes").innerHTML = minutes;
+        }
+        if (seconds < 10){
+            document.getElementById("count-down-seconds").innerHTML = '0' + seconds;
+        }
+        else{
+            document.getElementById("count-down-seconds").innerHTML = seconds;
+        }
+
+            
+        // If the count down is over, write some text 
+        if (distance < 0) {
+            clearInterval(x);
+            document.getElementById("demo").innerHTML = "Yaxında Sizinləyik";
+        }
+        }, 20);
+    
+    
+
+    </script>
+</body>
+</html>
