@@ -1,1 +1,1 @@
-web: gunicorn coming_soon.wsgi --log-file -
+web: gunicorn coming_soon.wsgi
